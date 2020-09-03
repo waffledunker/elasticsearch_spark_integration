@@ -35,4 +35,43 @@ You can use this jar to connect hadoop,hive,spark etc. with elasticsearch. For m
     $ sudo alternatives --config java
     ```
 
-# UPCOMING MORE...
+# STEP 2 - Unzip ES-Hadoop Connector and copy files to spark jar folder
+ * After downloading ES-Hadoop Connector, unzip the files.
+    ```sh
+    $ unzip elasticsearch-hadoop-7.5.0.zip
+    ```
+ * After unzipping, there is a "dist" folder inside that includes various .jar files. We only need "elasicsearch-hadoop-7.5.0.jar". This jar includes all other jars.
+   > We are copying our jar to "jars" folder inside our "$SPARK_HOME" which is "/etc/spark/jars" for me.
+   > That way, we don't need to specify for full path of our jar everytime on "sparkConf()".
+    ```sh
+    $ pwd
+    /tmp/elasticsearch-hadoop-7.5.0/dist
+    $ cp elasticsearch-hadoop-7.5.0.jar /etc/spark/jars
+    ```
+    
+ # STEP 3 - Configure SparkConf() to use ES-Hadoop Connector
+  * Now, we can configure our SparkConf() to use our ES.
+   > I am using pyspark with jupyter notebook for this purpose. You can use pyspark-shell or your preference of your choice.
+   ```python
+    from pyspark import SparkConf
+    conf = SparkConf()
+    #We can set any other configurations like this. Then pass the "conf" object to SparkSession or SparkContext.
+    conf.set("spark.driver.extraClassPath", "/etc/spark/jars/elasticsearch-hadoop-7.5.0.jar")
+   ```
+# Step 4 - Pass your Elasticsearch Configuration using SparkConf()
+ * We are almost there! Now, we can set configurations/options for our ES-Hadoop Connector to connect Elasticsearch.
+   ```python
+    conf.set("es.nodes.discovery", "false") # I am setting this to false, because my spark machine and my es cluster is in different isolated networks.
+    conf.set("es.node.data.only", "false") # I will be using my client node to gather data from elasticsearch.
+    conf.set("es.nodes.wan.only", "false") # TODO
+    conf.set("es.nodes.client.only", "true")
+    conf.set("es.nodes", "myesclient:9200") # you can pass multiple machines using comma(,) inside one single string("es1:9200,es2:9200,es3:9200")
+    conf.set("es.net.http.auth.user", "spark") # authorized user to read indexes. If you dont have any auth mechanism. You don't need this.
+    conf.set("es.net.http.auth.pass", "youruserpassword") # users password 
+    
+    #now we can create our spark session
+    from pyspark import SparkSession
+    spark = SparkSession.builder.master("local[4]").appName("your_app_name").config(conf=conf).getOrCreate()
+   ```
+
+#UPCOMING MORE!!!
