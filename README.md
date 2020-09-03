@@ -60,6 +60,7 @@ You can use this jar to connect hadoop,hive,spark etc. with elasticsearch. For m
    ```
 # Step 4 - Pass your Elasticsearch Configuration using SparkConf()
  * We are almost there! Now, we can set configurations/options for our ES-Hadoop Connector to connect Elasticsearch.
+  > For more configuration, Reference: https://www.elastic.co/guide/en/elasticsearch/hadoop/current/configuration.html
    ```python
     conf.set("es.nodes.discovery", "false") # I am setting this to false, because my spark machine and my es cluster is in different isolated networks.
     conf.set("es.node.data.only", "false") # I will be using my client node to gather data from elasticsearch.
