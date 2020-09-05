@@ -83,6 +83,10 @@ You can use this jar to connect hadoop,hive,spark etc. with elasticsearch. For m
   my_resource = "my_index/_doc" #you dont need to specify '_doc' if you dont use any types in es.
   my_query = '{"query":{"match_all": {}}}'  # you can specify a one-liner dsl query here. also accepts parametric query
   df = spark.read.format("org.elasticsearch.spark.sql").option("es.resource", my_resource).option("es.query", my_query).load()
+  
+  my_other_resource = "my_other_index/_doc"
+  my_other_query = '{"query":{"match":{"exits":{"field": "some_field_here"}}}}'
+  other_df = spark.read.format("org.elasticsearch.spark.sql").option("es.resource", my_other_resource).option("es.query", my_other_query).load()
  ```
  > Specifying query and resource as an option variable for read operation allows us to use multiple sources more easily afterwards.
 
