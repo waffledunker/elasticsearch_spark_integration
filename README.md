@@ -77,6 +77,7 @@ You can use this jar to connect hadoop,hive,spark etc. with elasticsearch. For m
 # Step 5 - Let the fun part begin! Read Operation
  * Now, we can read data from elasticsearch and manipulate the data however we want.
   > Spark Read Reference: https://spark.apache.org/docs/3.0.0/api/python/pyspark.sql.html#pyspark.sql.DataFrameReader.format
+  
   > ES Query Reference: https://www.elastic.co/guide/en/elasticsearch/hadoop/current/configuration.html#_querying
  ```python
  #we can define which indexes will be used to read data from
