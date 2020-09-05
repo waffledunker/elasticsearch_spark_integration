@@ -41,7 +41,7 @@ You can use this jar to connect hadoop,hive,spark etc. with elasticsearch. For m
     $ unzip elasticsearch-hadoop-7.5.0.zip
     ```
  * After unzipping, there is a "dist" folder inside that includes various .jar files. We only need "elasicsearch-hadoop-7.5.0.jar". This jar includes all other jars.
-   > We are copying our jar to "jars" folder inside our "$SPARK_HOME" which is "/etc/spark/jars" for me.
+   > We are copying our jar to "jars" folder inside our "$SPARK_HOME" which is "/etc/spark/" for me.
    > That way, we are more organized.
     ```sh
     $ pwd
